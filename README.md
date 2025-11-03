@@ -15,7 +15,7 @@ A Docker-compose setup for running multiple databases and development environmen
 
 | Service       | Image                        | Access                                         | Login           |
 | ------------- | ---------------------------- | ---------------------------------------------- | --------------- |
-| MariaDB       | mariadb:10.11                | [http://localhost:1001](http://localhost:1001) | root / 11111111 |
+| MariaDB       | mariadb:10.11                | [http://localhost:1001](http://localhost:1000) | root / 11111111 |
 | phpMyAdmin    | phpmyadmin:latest            | [http://localhost:1001](http://localhost:1001) | root / 11111111 |
 | PostgreSQL    | postgres:16-alpine           | [http://localhost:1003](http://localhost:1003) | root / 11111111 |
 | pgAdmin       | dpage/pgadmin4:latest        | [http://localhost:1003](http://localhost:1003) | root / 11111111 |
