@@ -17,13 +17,10 @@ A Docker-compose setup for running multiple databases and development environmen
 | ------------- | ---------------------------- | ---------------------------------------------- | --------------- |
 | MariaDB/MySQL | mariadb:10.11                | [http://localhost:1000](http://localhost:1000) | root / 11111111 |
 | phpMyAdmin    | phpmyadmin:latest            | [http://localhost:1001](http://localhost:1001) | root / 11111111 |
-
 | PostgreSQL    | postgres:16-alpine           | [http://localhost:1002](http://localhost:1002) | root / 11111111 |
 | pgAdmin       | dpage/pgadmin4:latest        | [http://localhost:1003](http://localhost:1003) | root / 11111111 |
-
 | MongoDB       | mongo:7                      | [http://localhost:1004](http://localhost:1004) | root / 11111111 |
 | Mongo Express | mongo-express:latest         | [http://localhost:1005](http://localhost:1005) | admin / pass    |
-
 | PHPLiteAdmin  | vtacquet/phpliteadmin:latest | [http://localhost:1006](http://localhost:1006) | no login        |
 
 ---
