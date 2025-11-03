@@ -3,7 +3,7 @@
 A Docker-compose setup for running multiple databases and development environments:
 
 * **Development Environments:** PHP, Node.js (Javascript/Typescript)
-* **Databases:** MariaDB, PostgreSQL, MongoDB, SQLite
+* **Databases:** MariaDB/MySQL, PostgreSQL, MongoDB, SQLite
 * **Web-based DB tools:** phpMyAdmin, pgAdmin, Mongo Express, PHPLiteAdmin
 * **Cached data:** speeds up Node/npm and PHP/composer installs for faster dev
 
@@ -15,12 +15,15 @@ A Docker-compose setup for running multiple databases and development environmen
 
 | Service       | Image                        | Access                                         | Login           |
 | ------------- | ---------------------------- | ---------------------------------------------- | --------------- |
-| MariaDB       | mariadb:10.11                | [http://localhost:1001](http://localhost:1000) | root / 11111111 |
+| MariaDB/MySQL | mariadb:10.11                | [http://localhost:1000](http://localhost:1000) | root / 11111111 |
 | phpMyAdmin    | phpmyadmin:latest            | [http://localhost:1001](http://localhost:1001) | root / 11111111 |
-| PostgreSQL    | postgres:16-alpine           | [http://localhost:1003](http://localhost:1003) | root / 11111111 |
+
+| PostgreSQL    | postgres:16-alpine           | [http://localhost:1002](http://localhost:1002) | root / 11111111 |
 | pgAdmin       | dpage/pgadmin4:latest        | [http://localhost:1003](http://localhost:1003) | root / 11111111 |
-| MongoDB       | mongo:7                      | [http://localhost:1005](http://localhost:1005) | root / 11111111 |
+
+| MongoDB       | mongo:7                      | [http://localhost:1004](http://localhost:1004) | root / 11111111 |
 | Mongo Express | mongo-express:latest         | [http://localhost:1005](http://localhost:1005) | admin / pass    |
+
 | PHPLiteAdmin  | vtacquet/phpliteadmin:latest | [http://localhost:1006](http://localhost:1006) | no login        |
 
 ---
@@ -55,8 +58,13 @@ A Docker-compose setup for running multiple databases and development environmen
 ```bash
 docker-compose up -d
 ```
+* PHP → /php , write your index.php, http://localhost:1090
 
-* Node → [http://localhost:1091](http://localhost:1091), [http://localhost:3333](http://localhost:3333) (React/Next.js after setting up `package.json`)
 * Head to Docker.desktop > containers > name column, node-1 (click name) > exec column > npx create-next-app@latestnpm / or react equivalent
+* Node → /node, set up `package.json` → write your /node/<your-react/nextjs-app>/app/page.tsx → http://localhost:1091 
+
+* PHP dependencies shall be similarly installed as node modules, in docker exec
+* other node dependencies should also be installed via docker exec 
+
 
 * Goodluck!
