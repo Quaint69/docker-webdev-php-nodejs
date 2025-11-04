@@ -29,3 +29,39 @@ javascript/typescript - installs nodejs
 	php:8.3-cli-alpine
 	
 	
+notes:
+1. use docker desktop, CHECK LOGS (INSANELY HELPFUL)
+2. use the CONTAINER TERMINAL (each one HAS a terminal), 
+	common use case are [installing dependencies, modify the container]
+3. 2 ways to use Docker:
+== for using multi-container composer ==
+1. assigning directrory for each container is a MUST
+2. mind how command is created, could be a really powerful automation for setting environment
+
+== for using a Base Image (alpine, ubuntu) OR mixed BaseImage + seperate container
+1. nothing much, its just much harder to do this,
+2. basically just a virtual machine, much harder or easier, but honestly you'd rather just do stuff locally than this..
+	why? because things like non-webapp GUI isnt gonna work, or like installers generally works for every machine, or the container needs GPU for its purpose.
+
+4. special node note (package.json): "dev": "next dev -H 0.0.0.0 -p 3333"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
