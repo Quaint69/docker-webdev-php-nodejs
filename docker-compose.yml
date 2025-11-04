@@ -1,0 +1,125 @@
+version: "3.9"
+
+services:
+  # === DATABASES ===
+  mariadb:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 11111111
+      MYSQL_DATABASE: appdb
+    ports:
+      - "1000:3306"
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: root
+      PMA_PASSWORD: 11111111
+    ports:
+      - "1001:80"
+    depends_on:
+      - mariadb
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 11111111
+      POSTGRES_DB: appdb
+    ports:
+      - "1002:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: root@example.com
+      PGADMIN_DEFAULT_PASSWORD: 11111111
+    ports:
+      - "1003:80"
+    depends_on:
+      - postgres
+
+  mongodb:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 11111111
+    ports:
+      - "1004:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  mongo-express: #mongo express will ALWAYS use admin/pass, this shit useless af
+    image: mongo-express:latest
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://root:11111111@mongodb:27017/
+      #ME_CONFIG_MONGODB_AUTH_USERNAME: root
+      #ME_CONFIG_MONGODB_AUTH_PASSWORD: 11111111
+      #ME_CONFIG_MONGODB_SERVER: mongodb
+      #ME_CONFIG_MONGODB_AUTH_DATABASE: admin
+    ports:
+      - "1005:8081"
+    depends_on:
+      - mongodb
+
+  phpliteadmin:
+    image: vtacquet/phpliteadmin:latest
+    restart: unless-stopped
+    ports:
+      - "1006:80"
+    volumes:
+      - ./sqlite:/sqlite
+
+  # === DEVELOPMENT ENVIRONMENTS ===
+  php:
+    image: php:8.3-cli-alpine
+    working_dir: /workspace/php #php folder location
+    command: php -S 0.0.0.0:1090 -t /workspace/php
+    ports:
+      - "1090:1090"
+    volumes:
+      - .:/workspace:cached
+      - composer-cache:/root/.composer
+
+  node:
+    image: node:24-alpine
+    working_dir: /workspace/node #node folder location
+    command: >
+      sh -c "
+      [ -f package.json ] || npm init -y;
+      [ -f app.js ] || echo 'console.log(\"Node server running...\")' > app.js;
+      npm install --no-audit --prefer-offline nodemon;
+      npx nodemon /workspace/node/app.js
+      "
+    ports:
+      - "1091:1091"
+      - "3333:3333" #expose a port for NPM RUN DEV or similar to host expose
+    volumes:
+      - .:/workspace:cached
+      - node-modules:/workspace/node/node_modules
+      - npm-cache:/root/.npm
+    ulimits: #for NPM or React/NextJS installs, check local OS too
+      nofile:
+        soft: 65535
+        hard: 65535
+
+
+volumes: #volume auto created, dont worry abt it <3
+  mariadb-data: {}
+  postgres-data: {}
+  mongo-data: {}
+  composer-cache: {}
+  npm-cache: {}
+  node-modules: {}

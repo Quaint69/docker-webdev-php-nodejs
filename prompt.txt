@@ -1,0 +1,31 @@
+make me a compose yml that has these:
+
+mariadb - myphpadmin
+postgres - pgadmin
+sqlite - phpliteadmin
+mongodb - mongo express
+
+php, installs composer
+javascript/typescript - installs nodejs
+
+==========================
+0. ports are assigned 1000+ incrementally so we arent confused 
+1. expose 3 ports in node for containers to expose port to host (like npm run dev)
+2. make sure the php and node installs like npm install and itself are cached, make sure cache is globally accessible whenever project folder im doing
+3. user = "root", password = "11111111" for mariadb, postgres, and sqlite, #mongoexpress always uses admin/pass so dont bother
+4. php and node has different working directory
+5. assign each language port to access or view the project development, like ports, /index.php or sample app.js for js/ts/node
+6. dont use a base image, make sure everyone is a different container, just in a compose
+7. these are the images to use in compose: 
+	mariadb:10.11
+	phpmyadmin:latest
+	postgres:16-alpine
+	dpage/pgadmin4:latest
+	mongo:7
+	mongo-express:latest
+	vtacquet/phpliteadmin:latest
+	
+	node:24-alpine
+	php:8.3-cli-alpine
+	
+	
