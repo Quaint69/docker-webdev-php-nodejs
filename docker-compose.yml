@@ -84,8 +84,10 @@ services:
 
   # === DEVELOPMENT ENVIRONMENTS ===
   php:
-    image: php:8.3-cli-alpine
-    working_dir: /workspace/php #php folder location
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    working_dir: /workspace/php
     command: php -S 0.0.0.0:1090 -t /workspace/php
     ports:
       - "1090:1090"
