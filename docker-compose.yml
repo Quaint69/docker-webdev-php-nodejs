@@ -1,4 +1,4 @@
-version: "3.9"
+# docker-compose.yml
 
 services:
   # === DATABASES ===
@@ -15,7 +15,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password
 
   phpmyadmin:
-    image: phpmyadmin:latest
+    image: phpmyadmin:fpm-alpine
     restart: unless-stopped
     environment:
       PMA_HOST: mariadb
@@ -101,7 +101,7 @@ services:
     command: >
       sh -c "
       [ -f package.json ] || npm init -y;
-      [ -f app.js ] || echo 'console.log(\"Node server running...\")' > app.js;
+      [ -f app.js ] || echo 'const http = require(\"http\"); http.createServer((req, res) => { res.end(\"Node server running...\"); }).listen(1091, \"0.0.0.0\");' > app.js;
       npm install --no-audit --prefer-offline nodemon;
       npx nodemon /workspace/node/app.js
       "
